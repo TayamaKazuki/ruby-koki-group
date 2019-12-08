@@ -2,9 +2,11 @@
 
 
 class Flipper < Sprite
-  @@flag = 0
+  @@flag = 0                            #フラグ
+  @@upspeed = 5                         #フリッパーが上がる時の速さ
+  @@downspeed = 3                       #フリッパーが下がる時の速さ
   
-  def initialize(x=0, y=0, image=nil)
+  def initialize(x=0, y=0, image=nil)   #初期化
   @x, @y, @image = x, y, image
   @z = 0
   @angle = 0
@@ -12,10 +14,10 @@ class Flipper < Sprite
   if image
     @center_x = image.width / 2
     @center_y = image.height / 2
-    @center_x = @x - @center_x
+    @center_x = @x - @center_x         #回転の中心を左端にする
   end
   
-  @angle = 20
+  @angle = 20                          #角度の初期値
   
   @visible = true
   @vanished = false
@@ -24,25 +26,23 @@ class Flipper < Sprite
   
   def update
      
-     if @@flag == 0
-         if self.angle >= -10
-            self.angle -= 2
+     if @@flag == 1                    #スペースを押してる時
+         if self.angle >= -10          #フリッパーを打つ
+            self.angle -= @@upspeed
         end
-     elsif @@flag == 1
-        if self.angle <= 20
-            self.angle += 1
-        elsif self.angle >= 20
-            @@flag ==0
+     elsif @@flag == 0                 #スペースを押してない時
+        if self.angle <= 20            #フリッパーが元の位置に戻る
+            self.angle += @@downspeed
        end
      end
  
   end
   
-  def hit
+  def hit                               #ballに当たった時
   end
   
   
-  def f_flag(val)
+  def setflag(val)                      #フラグをセット
       @@flag = val
   end
   
