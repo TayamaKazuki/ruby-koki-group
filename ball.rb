@@ -20,17 +20,44 @@ class Player < Sprite
   _init_collision_info(@image)
   end
   def update
-    self.x += 2 * @xspeed
-    self.y += 2 * @yspeed + 2
+    self.x += @xspeed
+    self.y += @yspeed
+    @yspeed += 1
+    if self.x < 0
+      self.x = 0
+    end
+    
+    if self.x > Window.width - self.image.width
+      self.x = Window.width - self.image.width
+    end
+
+    if self.y < 0
+      self.y = 0
+    end
+    
+    if self.y > Window.height - self.image.height
+      self.y = Window.height - self.image.height
+    end
+
     if self.x >= Window.width - self.image.width || self.x <= 0
       @xspeed *= -1
     end
-    if self.y >= Window.height - self.image.height || self.y <= 0
-      @yspeed *= -1
+    if self.y >= Window.height - self.image.height 
+      @yspeed *= -0.8
+    end
+    if self.y <= 0
+      @yspeed *= -1  
     end
   end
+  
   def shot
-    @xspeed *= -1
+   # @xspeed *= -1
     @yspeed *= -1
+    if @yspeed < 0
+        self.y -= self.image.height
+    end
+    if @yspeed > 0
+        self.y += self.image.height
+    end
   end
 end

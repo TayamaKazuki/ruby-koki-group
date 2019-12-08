@@ -1,10 +1,10 @@
 # coding: utf-8
 
 
-class Flipper < Sprite
+class Lflipper < Sprite
   @@flag = 0                            #フラグ
-  @@upspeed = 2                         #フリッパーが上がる時の速さ
-  @@downspeed = 1                       #フリッパーが下がる時の速さ
+  @@upspeed = 5                         #フリッパーが上がる時の速さ
+  @@downspeed = 3                       #フリッパーが下がる時の速さ
   
   def initialize(x=0, y=0, image=nil)   #初期化
   @x, @y, @image = x, y, image
@@ -14,7 +14,7 @@ class Flipper < Sprite
   if image
     @center_x = image.width / 2
     @center_y = image.height / 2
-    @center_x = @x - @center_x         #回転の中心を左端にする
+    @center_x = @x                     #回転の中心を左端にする
   end
   
   @angle = 20                          #角度の初期値
