@@ -10,8 +10,8 @@ Image.register(:player, 'images/player.png')
 Image.register(:enemy, 'images/enemy.png') 
 
 Window.load_resources do
-  Window.width  = 800
-  Window.height = 600
+  Window.width  = 600
+  Window.height = 800
 
   player_img = Image[:player]
   player_img.set_color_key([0, 0, 0])
@@ -24,13 +24,18 @@ Window.load_resources do
   players = [player]
   enemies = []
   10.times do
-    enemies << Enemy.new(rand(800), rand(600), enemy_img)
+    enemies << Enemy.new(rand(600), rand(800), enemy_img)
   end
 
   Window.loop do
+    #if Input.key_push?(K_R)
+   #     break
+    #end
     Sprite.update(enemies)
     Sprite.draw(enemies)
-    Sprite.update(players)
+    if Input.key_down?(K_SPACE)
+        Sprite.update(players)
+    end
     #player.update
     Sprite.draw(players)
 
