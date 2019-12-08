@@ -21,7 +21,7 @@ class Player < Sprite
   end
   def update
     self.x += 2 * @xspeed
-    self.y += 2 * @yspeed + 2
+    self.y += 2 * @yspeed
     if self.x >= Window.width - self.image.width || self.x <= 0
       @xspeed *= -1
     end

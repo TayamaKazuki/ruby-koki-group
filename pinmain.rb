@@ -2,8 +2,9 @@
 require 'dxopal'
 include DXOpal
 
-require_remote 'k_player.rb'
-require_remote 'k_enemy.rb'
+require_remote 'ball.rb'
+require_remote 'bumper.rb'
+require_remote 'flipper.rb'
 
 Image.register(:player, 'images/player.png') 
 Image.register(:enemy, 'images/enemy.png') 
