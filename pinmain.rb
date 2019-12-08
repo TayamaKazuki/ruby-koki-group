@@ -7,22 +7,26 @@ require_remote 'bumper.rb'
 require_remote 'flipper.rb'
 
 Image.register(:player, 'images/player.png') 
-Image.register(:enemy, 'images/enemy.png') 
+Image.register(:enemy, 'images/enemy.png')
+Image.register(:flipper, 'images/flipper.png')
 
 Window.load_resources do
   Window.width  = 600
   Window.height = 800
 
   player_img = Image[:player]
+  flipper_img = Image[:flipper]
   player_img.set_color_key([0, 0, 0])
 
   enemy_img = Image[:enemy]
   enemy_img.set_color_key([0, 0, 0])
 
   player = Player.new(400, 50, player_img,1, 1)
+  flipper = Flipper.new(30, 50, flipper_img)
 
   players = [player]
   enemies = []
+  flippers = [flipper]
   10.times do
     enemies << Enemy.new(rand(600), rand(800), enemy_img)
   end
@@ -37,7 +41,9 @@ Window.load_resources do
         Sprite.update(players)
     end
     #player.update
+    Sprite.update(flippers)
     Sprite.draw(players)
+    Sprite.draw(flippers)
 
     # 当たり判定
     Sprite.check(players, enemies)
