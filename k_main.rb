@@ -5,12 +5,13 @@ include DXOpal
 require_remote 'k_player.rb'
 require_remote 'k_enemy.rb'
 
-Image.register(:player, 'images/player.png') 
+Image.register(:player, 'images/1575790244724.png') 
 Image.register(:enemy, 'images/enemy.png') 
 
 Window.load_resources do
   Window.width  = 800
   Window.height = 600
+  Window.bgcolor = C_BLUE
 
   player_img = Image[:player]
   player_img.set_color_key([0, 0, 0])
@@ -18,7 +19,7 @@ Window.load_resources do
   enemy_img = Image[:enemy]
   enemy_img.set_color_key([0, 0, 0])
 
-  player = Player.new(400, 50, player_img,1, 1)
+  player = Player.new(0, 0, player_img,1, 1)
 
   players = [player]
   enemies = []
