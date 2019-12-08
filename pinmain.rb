@@ -42,9 +42,9 @@ Window.load_resources do
     end
 
     if Input.key_down?(K_R)
-      flippers[0].f_flag(0)
+      flippers[0].setflag(1)
     else
-      flippers[0].f_flag(1)
+      flippers[0].setflag(0)
     end
     #player.update
     Sprite.update(flippers)

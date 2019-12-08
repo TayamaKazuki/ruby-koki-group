@@ -3,8 +3,8 @@
 
 class Flipper < Sprite
   @@flag = 0                            #フラグ
-  @@upspeed = 5                         #フリッパーが上がる時の速さ
-  @@downspeed = 3                       #フリッパーが下がる時の速さ
+  @@upspeed = 2                         #フリッパーが上がる時の速さ
+  @@downspeed = 1                       #フリッパーが下がる時の速さ
   
   def initialize(x=0, y=0, image=nil)   #初期化
   @x, @y, @image = x, y, image
