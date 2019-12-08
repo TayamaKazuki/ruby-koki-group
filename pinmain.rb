@@ -22,7 +22,7 @@ Window.load_resources do
   enemy_img.set_color_key([0, 0, 0])
 
   player = Player.new(400, 50, player_img,1, 1)
-  flipper = Flipper.new(30, 50, flipper_img)
+  flipper = Flipper.new(30, 700, flipper_img)
 
   players = [player]
   enemies = []
@@ -40,6 +40,12 @@ Window.load_resources do
     if Input.key_down?(K_SPACE)
         Sprite.update(players)
     end
+
+    if Input.key_down?(K_R)
+      flippers[0].setflag(1)
+    else
+      flippers[0].setflag(0)
+    end
     #player.update
     Sprite.update(flippers)
     Sprite.draw(players)
@@ -47,5 +53,6 @@ Window.load_resources do
 
     # 当たり判定
     Sprite.check(players, enemies)
+    Sprite.check(players, flippers)
   end
 end
