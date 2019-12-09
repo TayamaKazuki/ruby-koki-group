@@ -10,11 +10,11 @@ class Lflipper < Sprite
   @x, @y, @image = x, y, image
   @z = 0
   @angle = 0
-  @scale_x = @scale_y = 1.0
+  @scale_x = @scale_y = 0.4
   if image
-    @center_x = image.width / 2
+    #@center_x = image.width / 2
     @center_y = image.height / 2
-    @center_x = @x                     #回転の中心を左端にする
+    @center_x = 0                     #回転の中心を左端にする
   end
   
   @angle = 20                          #角度の初期値
