@@ -6,12 +6,12 @@ require_remote 'ball.rb'
 require_remote 'bumper.rb'
 require_remote 'flipper.rb'
 
-Image.register(:player, 'images/player.png') 
+Image.register(:player, 'images/ball.png') 
 Image.register(:enemy, 'images/enemy.png')
 Image.register(:flipper, 'images/flipper.png')
 
 Window.load_resources do
-  Window.width  = 600
+  Window.width  = 400
   Window.height = 800
 
   player_img = Image[:player]
@@ -27,10 +27,13 @@ Window.load_resources do
   players = [player]
   enemies = []
   flippers = [flipper]
+=begin
   10.times do
     enemies << Enemy.new(rand(600), rand(800), enemy_img)
-  end
-
+=end
+    enemies << Enemy.new(200, 30, enemy_img)
+    enemies << Enemy.new(100, 60, enemy_img)
+    enemies << Enemy.new(300, 60, enemy_img)
   Window.loop do
     #if Input.key_push?(K_R)
    #     break
