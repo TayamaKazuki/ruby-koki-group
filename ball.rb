@@ -3,7 +3,7 @@
 
 class Player < Sprite
   def initialize(x=0, y=0, image=nil, xspeed, yspeed)
-  @x, @y, @image = x, y, image
+  @x, @y, @image, @point = x, y, image
   @z = 0
   @angle = 0
   @scale_x = @scale_y = 0.4
