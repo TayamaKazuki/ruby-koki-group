@@ -10,6 +10,7 @@ require_remote 'l-flipper.rb'
 Image.register(:player, 'images/ball.png') 
 Image.register(:enemy, 'images/bumpe.png')
 Image.register(:flipper, 'images/flipper.png')
+Image.register(:back, 'images/background.png')
 
 Window.load_resources do
   Window.width  = 400
@@ -22,6 +23,7 @@ Window.load_resources do
   player_img = Image[:player]
   flipper_img = Image[:flipper]
   player_img.set_color_key([0, 0, 0])
+  background_img = Image[:back]
 
   enemy_img = Image[:enemy]
   enemy_img.set_color_key([0, 0, 0])
@@ -59,6 +61,7 @@ Window.load_resources do
   enemies << Enemy.new(300, 220, enemy_img)
 
   Window.loop do
+     Window.draw(0,0,background_img)
     #if Input.key_push?(K_R)
    #     break
     #end
