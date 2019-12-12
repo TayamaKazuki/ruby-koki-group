@@ -13,7 +13,7 @@ Image.register(:flipper, 'images/flipper.png')
 
 Window.load_resources do
   Window.width  = 400
-  Window.height = 800
+  Window.height = 1000
 
   GAME_INFO = {
   scene: :title,  # 現在のシーン(起動直後は:title)
@@ -48,7 +48,7 @@ Window.load_resources do
   flippers_l << Lflipper.new(10, 700, flipper_img)
 
   font = Font.new(30)
-  pt = 1
+  pt = 0
 =begin
   10.times do
     enemies << Enemy.new(rand(600), rand(800), enemy_img)
@@ -74,9 +74,9 @@ Window.load_resources do
         Window.draw_font(10,10,"得点:#{pt}",font)
         Sprite.update(enemies)
         Sprite.draw(enemies)
-        if Input.key_down?(K_SPACE)
-        Sprite.update(players)
-        end
+       # if Input.key_down?(K_SPACE)
+            Sprite.update(players)
+        #end
 
     #操作----------------------------------------
     if Input.key_down?(K_RIGHT)
@@ -103,6 +103,15 @@ Window.load_resources do
             pt += 1
         end
         Sprite.check(players, enemies)
+        
+        if players[0] === flippers_r
+            players[0].change_x(flippers_r[0].ang_flag)
+        end
+        
+        if players[0] === flippers_l
+            players[0].change_x(flippers_l[0].ang_flag)
+        end
+        
         Sprite.check(players, flippers_r)
         Sprite.check(players, flippers_l)
         

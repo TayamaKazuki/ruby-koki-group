@@ -10,14 +10,14 @@ class Rflipper < Sprite
   @x, @y, @image = x, y, image
   @z = 0
   @angle = 0
-  @scale_x = @scale_y = 0.4
+  @scale_x = @scale_y = 0.5
   if image
     #@center_x = image.width / 2
     @center_y =  image.height / 2
     @center_x =  0                      #回転の中心を左端にする
   end
   
-  @angle = 160                          #角度の初期値
+  @angle = 140                          #角度の初期値
   
   @visible = true
   @vanished = false
@@ -27,11 +27,11 @@ class Rflipper < Sprite
   def update
      
      if @@flag == 1                    #スペースを押してる時
-         if self.angle <= 190          #フリッパーを打つ
+         if self.angle <= 220          #フリッパーを打つ
             self.angle += @@upspeed
         end
      elsif @@flag == 0                 #スペースを押してない時
-        if self.angle >= 160            #フリッパーが元の位置に戻る
+        if self.angle >= 140            #フリッパーが元の位置に戻る
             self.angle -= @@downspeed
        end
      end
@@ -46,4 +46,14 @@ class Rflipper < Sprite
       @@flag = val
   end
   
+  def ang_flag
+      @@aflag = 0
+      if self.angle > 175
+        @@aflag = 1
+      elsif self.angle < 175
+        @@aflag = -1
+      end
+      
+      return @@aflag
+  end
 end

@@ -1,6 +1,5 @@
 # coding: utf-8
 
-
 class Player < Sprite
   def initialize(x=0, y=0, image=nil, xspeed, yspeed)
   @x, @y, @image, @point = x, y, image
@@ -29,7 +28,7 @@ class Player < Sprite
       self.x = 0
     end
     
-    if self.x > Window.width - self.image.width*self.scale_x
+    if self.x > Window.width - self.image.width*self.scale_x #テレポート
       self.x = Window.width - self.image.width*self.scale_x
     end
 
@@ -37,23 +36,33 @@ class Player < Sprite
       self.y = 0
     end
     
-    if self.y > Window.height - self.image.height*self.scale_y
+    if self.y > Window.height - self.image.height*self.scale_y #テレポート
       self.y = Window.height - self.image.height*self.scale_y
     end
 
-    if self.x >= Window.width - self.image.width*self.scale_x || self.x <= 0
+    if self.x >= Window.width - self.image.width*self.scale_x || self.x <= 0 #壁の反転
       @xspeed *= -1
     end
-    if self.y >= Window.height - self.image.height*self.scale_y
+    if self.y >= Window.height - self.image.height*self.scale_y #床の反転
       @yspeed *= -0.8
     end
     if self.y <= 0
-      @yspeed *= -1  
+      @yspeed *= -1
+    end
+  end
+  
+  def change_x(flag)
+    if flag > 0
+        @xspeed += 8
+        
+    elsif flag < 0
+        @xspeed -= 8
     end
   end
   
   def shot
    # @xspeed *= -1
+    @yspeed *= 0.98
     @yspeed *= -1
     if @yspeed < 0
         self.y -= self.image.height*self.scale_y
