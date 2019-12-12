@@ -24,6 +24,7 @@ class Player < Sprite
     self.x += @xspeed
     self.y += @yspeed
     @yspeed += 1
+    @xspeed *= 0.99
     if self.x < 0
       self.x = 0
     end
@@ -34,6 +35,7 @@ class Player < Sprite
 
     if self.y < 0
       self.y = 0
+      #@yspeed *= -1
     end
     
     if self.y > Window.height - self.image.height*self.scale_y #テレポート
@@ -46,13 +48,15 @@ class Player < Sprite
     if self.y >= Window.height - self.image.height*self.scale_y #床の反転
       @yspeed *= -0.8
     end
-    if self.y <= 0
+    if self.y <= 0 && @yspeed < 0
       @yspeed *= -1
     end
   end
   
   def change_x(flag)
-    if flag > 0
+    if flag == 8
+        @xspeed *= 1.1
+    elsif flag > 0
         @xspeed += 8
         
     elsif flag < 0

@@ -8,7 +8,7 @@ require_remote 'r-flipper.rb'
 require_remote 'l-flipper.rb'
 
 Image.register(:player, 'images/ball.png') 
-Image.register(:enemy, 'images/enemy.png')
+Image.register(:enemy, 'images/bumpe.png')
 Image.register(:flipper, 'images/flipper.png')
 
 Window.load_resources do
@@ -53,9 +53,10 @@ Window.load_resources do
   10.times do
     enemies << Enemy.new(rand(600), rand(800), enemy_img)
 =end
-    enemies << Enemy.new(200, 30, enemy_img)
-    enemies << Enemy.new(100, 60, enemy_img)
-    enemies << Enemy.new(300, 60, enemy_img)
+
+  enemies << Enemy.new(200, 80, enemy_img)
+  enemies << Enemy.new(100, 220, enemy_img)
+  enemies << Enemy.new(300, 220, enemy_img)
 
   Window.loop do
     #if Input.key_push?(K_R)
@@ -112,6 +113,9 @@ Window.load_resources do
             players[0].change_x(flippers_l[0].ang_flag)
         end
         
+        if players[0] === enemies
+            players[0].change_x(8)
+        end
         Sprite.check(players, flippers_r)
         Sprite.check(players, flippers_l)
         
