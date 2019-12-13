@@ -10,6 +10,7 @@ require_remote 'l-flipper.rb'
 Image.register(:player, 'images/ball.png') 
 Image.register(:enemy, 'images/bumper.png')
 Image.register(:flipper, 'images/flipper.png')
+Image.register(:tit, 'images/title.png')
 Image.register(:back, 'images/background.png')
 
 Window.load_resources do
@@ -23,6 +24,7 @@ Window.load_resources do
   player_img = Image[:player]
   flipper_img = Image[:flipper]
   player_img.set_color_key([0, 0, 0])
+  title_img = Image[:tit]
   background_img = Image[:back]
 
   enemy_img = Image[:enemy]
@@ -61,7 +63,8 @@ Window.load_resources do
     case GAME_INFO[:scene]
     when :title
       # タイトル画面
-      Window.draw_font(0, 30, "PRESS SPACE", Font.default)
+      Window.draw(0,0,title_img)
+      Window.draw_font(120, 450, "PRESS SPACE", Font.default)
       # スペースキーが押されたらシーンを変える
       if Input.key_push?(K_SPACE)
         GAME_INFO[:scene] = :playing
@@ -146,6 +149,7 @@ Window.load_resources do
       Window.draw_font(0, 30, "GAME OVER", Font.default)
       Window.draw_font(0, 60, "SCORE:#{pt}", Font.default)
       Window.draw_font(0, 90, "REPLAY PRESS S_KEY", Font.default)
+      Window.draw_font(0, 120, "TITLE PRESS T_KEY",Font.default)
       
       # スペースキーが押されたらゲームの状態をリセットし、シーンを変える
       if Input.key_push?(K_S)
@@ -155,6 +159,15 @@ Window.load_resources do
         uni = iuni
         GAME_INFO[:scene] = :playing
       end
+      
+      if Input.key_push?(K_T)
+        player = Player.new(400, 50, player_img,1, 1)
+        players = [player]
+        pt = 0
+        uni = iuni
+        GAME_INFO[:scene] = :title
+      end
+      
     end
   end
 end
