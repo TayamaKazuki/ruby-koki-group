@@ -55,7 +55,8 @@ class Player < Sprite
   
   def change_x(flag)
     if flag == 8
-        @xspeed *= 1.1
+        #@xspeed += 1
+        @xspeed *= 1.3
     elsif flag > 0
         @xspeed += 8
         

@@ -8,7 +8,7 @@ require_remote 'r-flipper.rb'
 require_remote 'l-flipper.rb'
 
 Image.register(:player, 'images/ball.png') 
-Image.register(:enemy, 'images/bumpe.png')
+Image.register(:enemy, 'images/bumper.png')
 Image.register(:flipper, 'images/flipper.png')
 Image.register(:back, 'images/background.png')
 
@@ -27,16 +27,7 @@ Window.load_resources do
 
   enemy_img = Image[:enemy]
   enemy_img.set_color_key([0, 0, 0])
-=begin
-  player = Player.new(400, 50, player_img,1, 1)
-  point = Player.new(0,0,nil,1,1)
-  flipper = Flipper.new(30, 700, flipper_img)
 
-  players = [player]
-  points = [point]
-  enemies = []
-  flippers = [flipper]
-=end
   #配列---------------------------------------
   players = []
   enemies = []
@@ -51,6 +42,8 @@ Window.load_resources do
 
   font = Font.new(30)
   pt = 0
+  iuni = 2
+  uni = iuni
 =begin
   10.times do
     enemies << Enemy.new(rand(600), rand(800), enemy_img)
@@ -75,12 +68,18 @@ Window.load_resources do
       end
       
     when :playing
-        Window.draw_font(10,10,"得点:#{pt}",font)
+        #プレイ画面
+        Window.draw_font(10,10,"得点:#{pt} Rキーでリスタート",font)
+        Window.draw_font(10,40,"ボール:#{uni}",font)
         Sprite.update(enemies)
         Sprite.draw(enemies)
-       # if Input.key_down?(K_SPACE)
+       # if Input.key_down?(K_SPACE) #デバッグ用　コマ送り
             Sprite.update(players)
         #end
+        if Input.key_push?(K_R)
+            player = Player.new(400, 50, player_img,1, 1)
+            players = [player]
+        end
 
     #操作----------------------------------------
     if Input.key_down?(K_RIGHT)
@@ -103,8 +102,10 @@ Window.load_resources do
         
         # 当たり判定
         if players[0] === enemies
-            #points[0].x= pt
             pt += 1
+            if pt % 100 == 0
+                uni += 1
+            end
         end
         Sprite.check(players, enemies)
         
@@ -122,17 +123,36 @@ Window.load_resources do
         Sprite.check(players, flippers_r)
         Sprite.check(players, flippers_l)
         
-        if players[0].y >= Window.height - players[0].image.height*players[0].scale_y
+        if players[0].y >= Window.height - players[0].image.height*players[0].scale_y && uni != 0
+            uni -= 1
+            GAME_INFO[:scene] = :restart
+        end
+        if uni == 0
             GAME_INFO[:scene] = :game_over
         end
+        
+    when :restart
+        Window.draw_font(0, 30, "REPLAY PRESS S_KEY", Font.default)
+
+        # スペースキーが押されたらゲームの状態をリセットし、シーンを変える
+        if Input.key_push?(K_S)
+          player = Player.new(400, 50, player_img,1, 1)
+          players = [player]
+          GAME_INFO[:scene] = :playing
+        end
+    
     when :game_over
       # ゲームオーバー画面
-      Window.draw_font(0, 30, "REPLAY PRESS S_KEY", Font.default)
-
+      Window.draw_font(0, 30, "GAME OVER", Font.default)
+      Window.draw_font(0, 60, "SCORE:#{pt}", Font.default)
+      Window.draw_font(0, 90, "REPLAY PRESS S_KEY", Font.default)
+      
       # スペースキーが押されたらゲームの状態をリセットし、シーンを変える
       if Input.key_push?(K_S)
         player = Player.new(400, 50, player_img,1, 1)
         players = [player]
+        pt = 0
+        uni = iuni
         GAME_INFO[:scene] = :playing
       end
     end
