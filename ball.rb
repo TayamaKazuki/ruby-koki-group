@@ -58,6 +58,12 @@ class Player < Sprite
         #@yspeed *= 0.1
         @xspeed *= 1.3
         
+    elsif flag == 6
+        @xspeed *= 0.2
+        @yspeed *= 0.2
+        self.x = rand(390)
+        self.y = rand(600)
+        
     elsif flag == 4
         @xspeed *= 0.2
         @yspeed *= 0.2
