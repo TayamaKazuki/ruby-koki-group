@@ -10,8 +10,11 @@ require_remote 'l-flipper.rb'
 Image.register(:player, 'images/ball.png') 
 Image.register(:enemy, 'images/bumper.png')
 Image.register(:flipper, 'images/flipper.png')
+Image.register(:item, 'images/item.png')
 Image.register(:tit, 'images/title.png')
 Image.register(:back, 'images/background.png')
+Image.register(:back2, 'images/back2.jpg')
+Image.register(:gameover, 'images/gameover.jpg')
 
 Window.load_resources do
   Window.width  = 400
@@ -26,8 +29,10 @@ Window.load_resources do
   player_img.set_color_key([0, 0, 0])
   title_img = Image[:tit]
   background_img = Image[:back]
-
+  background2_img = Image[:back2]
+  gameover_img = Image[:gameover]
   enemy_img = Image[:enemy]
+  item_img =Image[:item]
   enemy_img.set_color_key([0, 0, 0])
 
   #配列---------------------------------------
@@ -47,6 +52,7 @@ Window.load_resources do
   pt = 0
   iuni = 2
   uni = iuni #残機
+  f_scene = 0
 =begin
   10.times do
     enemies << Enemy.new(rand(600), rand(800), enemy_img)
@@ -59,7 +65,7 @@ Window.load_resources do
   #items << Enemy.new(220, 150, enemy_img)
 
   Window.loop do
-     Window.draw(0,0,background_img)
+     #Window.draw(0,0,background_img)
     #if Input.key_push?(K_R)
    #     break
     #end
@@ -86,6 +92,8 @@ Window.load_resources do
       
     when :playing
         #プレイ画面
+        f_scene = 1
+        Window.draw(0,0,background_img)
         Window.draw_font(10,10,"得点:#{pt} Rキーでリスタート",font)
         Window.draw_font(10,40,"ボール:#{uni}",font)
         Sprite.update(enemies)
@@ -131,7 +139,7 @@ Window.load_resources do
             end
             
             if pt % 50 == 0
-                item = Enemy.new(220, 150, enemy_img)
+                item = Enemy.new(220, 150, item_img)
                 items = [item]            
                 end
         end
@@ -161,6 +169,8 @@ Window.load_resources do
         
         when :playing2
         #プレイ画面(map2)
+        f_scene = 2
+        Window.draw(0,0,background2_img)
         Window.draw_font(10,10,"得点:#{pt} Rキーでリスタート",font)
         Window.draw_font(10,40,"ボール:#{uni}",font)
         Sprite.update(enemies)
@@ -206,7 +216,7 @@ Window.load_resources do
             end
             
             if pt % 50 == 0
-                item = Enemy.new(220, 150, enemy_img)
+                item = Enemy.new(220, 150, item_img)
                 items = [item]            
                 end
         end
@@ -235,21 +245,25 @@ Window.load_resources do
         end
         
     when :restart
-        Window.draw_font(0, 30, "REPLAY PRESS SPACE_KEY", Font.default)
+        Window.draw_font(20, 30, "CONTINUE PRESS SPACE_KEY", Font.default)
 
         # スペースキーが押されたらゲームの状態をリセットし、シーンを変える
         if Input.key_push?(K_SPACE)
           player = Player.new(400, 50, player_img,1, 1)
           players = [player]
-          GAME_INFO[:scene] = :playing
+          if f_scene == 1 
+            GAME_INFO[:scene] = :playing
+          elsif f_scene == 2
+            GAME_INFO[:scene] = :playing2
+          end
         end
     
     when :game_over
       # ゲームオーバー画面
-      Window.draw_font(0, 30, "GAME OVER", Font.default)
-      Window.draw_font(0, 60, "SCORE:#{pt}", Font.default)
-      Window.draw_font(0, 90, "REPLAY PRESS SPACE_KEY", Font.default)
-      Window.draw_font(0, 120, "TITLE PRESS T_KEY",Font.default)
+      Window.draw(0,0,gameover_img)
+      Window.draw_font(20, 360, "SCORE:#{pt}", Font.default)
+      Window.draw_font(20, 390, "REPLAY PRESS SPACE_KEY", Font.default)
+      Window.draw_font(20, 420, "TITLE PRESS T_KEY",Font.default)
       
       # スペースキーが押されたらゲームの状態をリセットし、シーンを変える
       if Input.key_push?(K_SPACE)
@@ -257,7 +271,11 @@ Window.load_resources do
         players = [player]
         pt = 0
         uni = iuni
-        GAME_INFO[:scene] = :playing
+        if f_scene == 1 
+            GAME_INFO[:scene] = :playing
+          elsif f_scene == 2
+            GAME_INFO[:scene] = :playing2
+         end
       end
       
       if Input.key_push?(K_T)
