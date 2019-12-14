@@ -9,6 +9,7 @@ require_remote 'l-flipper.rb'
 
 Image.register(:player, 'images/ball.png') 
 Image.register(:enemy, 'images/bumper.png')
+Image.register(:enemy2, 'images/bumper2.png')
 Image.register(:flipper, 'images/flipper.png')
 Image.register(:item, 'images/item.png')
 Image.register(:tit, 'images/title.png')
@@ -32,6 +33,7 @@ Window.load_resources do
   background2_img = Image[:back2]
   gameover_img = Image[:gameover]
   enemy_img = Image[:enemy]
+  enemy2_img = Image[:enemy2]
   item_img =Image[:item]
   enemy_img.set_color_key([0, 0, 0])
 
@@ -83,9 +85,10 @@ Window.load_resources do
         GAME_INFO[:scene] = :playing
       
       elsif Input.key_push?(K_2)
-        enemies[0] = Enemy.new(200, 220, enemy_img)
-        enemies[1] = Enemy.new(100, 220, enemy_img)
-        enemies[2] = Enemy.new(300, 220, enemy_img)
+        enemies[0] = Enemy.new(200, 300, enemy2_img)
+        enemies[1] = Enemy.new(100, 80, enemy2_img)
+        enemies[2] = Enemy.new(300, 80, enemy2_img)
+        enemies[3] = Enemy.new(200, 200, enemy_img)
         GAME_INFO[:scene] = :playing2
       end
       
@@ -283,6 +286,9 @@ Window.load_resources do
         players = [player]
         pt = 0
         uni = iuni
+        if f_scene == 2
+           enemies[3].vanish
+        end
         GAME_INFO[:scene] = :title
       end
       

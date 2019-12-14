@@ -83,9 +83,9 @@ Window.load_resources do
         Sprite.update(enemies)
         Sprite.draw(enemies)
         Sprite.draw(items)
-       # if Input.key_down?(K_SPACE) #デバッグ用　コマ送り
+        if Input.key_down?(K_SPACE) #デバッグ用　コマ送り
             Sprite.update(players)
-        #end
+        end
         if Input.key_push?(K_R)
             player = Player.new(400, 50, player_img,1, 1)
             players = [player]
