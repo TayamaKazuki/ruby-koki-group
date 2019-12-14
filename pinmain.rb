@@ -143,8 +143,8 @@ Window.load_resources do
             
             if pt % 50 == 0
                 item = Enemy.new(220, 150, item_img)
-                items = [item]            
-                end
+                items = [item]
+            end
         end
         Sprite.check(players, enemies)
         
@@ -211,6 +211,10 @@ Window.load_resources do
             players[0].change_x(4)
             items[0].vanish
         end
+        if players[1] === items
+            players[1].change_x(4)
+            items[0].vanish
+        end
         
         if players[0] === enemies
             pt += 1
@@ -219,22 +223,49 @@ Window.load_resources do
             end
             
             if pt % 50 == 0
+                if players[1] == nil
+                    players[1] = Player.new(400, 50, player_img,1, 1)
+                end
                 item = Enemy.new(90, 200, item_img)
                 items = [item]            
                 end
         end
+        if players[1] === enemies
+            pt += 1
+            if pt % 100 == 0
+                uni += 1
+            end
+            
+            if pt % 50 == 0
+                if players[1] == nil
+                    players = Player.new(400, 50, player_img,1, 1)
+                end
+                item = Enemy.new(90, 200, item_img)
+                items = [item]            
+                end
+        end
+        
         Sprite.check(players, enemies)
         
         if players[0] === flippers_r
             players[0].change_x(flippers_r[0].ang_flag)
         end
+        if players[1] === flippers_r
+            players[1].change_x(flippers_r[0].ang_flag)
+        end
         
         if players[0] === flippers_l
             players[0].change_x(flippers_l[0].ang_flag)
         end
+        if players[1] === flippers_l
+            players[1].change_x(flippers_l[0].ang_flag)
+        end
         
         if players[0] === enemies
             players[0].change_x(8)
+        end
+        if players[1] === enemies
+            players[1].change_x(8)
         end
         Sprite.check(players, flippers_r)
         Sprite.check(players, flippers_l)
@@ -242,6 +273,12 @@ Window.load_resources do
         if players[0].y >= Window.height - players[0].image.height*players[0].scale_y && uni != 0
             uni -= 1
             GAME_INFO[:scene] = :restart
+        end
+        if players[1] != nil
+            if players[1].y >= Window.height - players[0].image.height*players[0].scale_y && uni != 0
+                uni -= 1
+                GAME_INFO[:scene] = :restart
+            end
         end
         if uni == 0
             GAME_INFO[:scene] = :game_over
@@ -254,7 +291,7 @@ Window.load_resources do
         if Input.key_push?(K_SPACE)
           player = Player.new(400, 50, player_img,1, 1)
           players = [player]
-          if f_scene == 1 
+          if f_scene == 1
             GAME_INFO[:scene] = :playing
           elsif f_scene == 2
             GAME_INFO[:scene] = :playing2
