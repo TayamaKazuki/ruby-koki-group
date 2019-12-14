@@ -50,7 +50,7 @@ Window.load_resources do
   flippers_r << Rflipper.new(390, 700, flipper_img)
   flippers_l << Lflipper.new(10, 700, flipper_img)
 
-  font = Font.new(30)
+  font = Font.new(30,"ＭＳ 明朝",color: C_YELLOW)
   pt = 0
   iuni = 2
   uni = iuni #残機
@@ -75,8 +75,8 @@ Window.load_resources do
     when :title
       # タイトル画面
       Window.draw(0,0,title_img)
-      Window.draw_font(120, 450, "PRESS KEY", Font.default)
-      Window.draw_font(120, 500, "☆1　☆2", Font.default)
+      Window.draw_font(120, 450, "PRESS KEY", font,color: C_YELLOW)
+      Window.draw_font(120, 500, "☆1　☆2", font,color: C_YELLOW)
       # スペースキーが押されたらシーンを変える
       if Input.key_push?(K_1)
         enemies[0] = Enemy.new(200, 80, enemy_img)
@@ -97,7 +97,7 @@ Window.load_resources do
         #プレイ画面
         f_scene = 1
         Window.draw(0,0,background_img)
-        Window.draw_font(10,10,"得点:#{pt} Rキーでリスタート",font)
+        Window.draw_font(10,10,"得点:#{pt}",font)
         Window.draw_font(10,40,"ボール:#{uni}",font)
         Sprite.update(enemies)
         Sprite.draw(enemies)
@@ -174,8 +174,8 @@ Window.load_resources do
         #プレイ画面(map2)
         f_scene = 2
         Window.draw(0,0,background2_img)
-        Window.draw_font(10,10,"得点:#{pt} Rキーでリスタート",font)
-        Window.draw_font(10,40,"ボール:#{uni}",font)
+        Window.draw_font(10,10,"得点:#{pt}",font,color: [255,50,255,0])
+        Window.draw_font(10,40,"ボール:#{uni}",font,color: [255,50,255,0])
         Sprite.update(enemies)
         Sprite.draw(enemies)
         Sprite.draw(items)
@@ -248,7 +248,7 @@ Window.load_resources do
         end
         
     when :restart
-        Window.draw_font(20, 30, "CONTINUE PRESS SPACE_KEY", Font.default)
+        Window.draw_font(20, 30, "CONTINUE PRESS SPACE_KEY", font)
 
         # スペースキーが押されたらゲームの状態をリセットし、シーンを変える
         if Input.key_push?(K_SPACE)
@@ -264,9 +264,9 @@ Window.load_resources do
     when :game_over
       # ゲームオーバー画面
       Window.draw(0,0,gameover_img)
-      Window.draw_font(20, 360, "SCORE:#{pt}", Font.default)
-      Window.draw_font(20, 390, "REPLAY PRESS SPACE_KEY", Font.default)
-      Window.draw_font(20, 420, "TITLE PRESS T_KEY",Font.default)
+      Window.draw_font(20, 360, "SCORE:#{pt}", font)
+      Window.draw_font(20, 390, "REPLAY PRESS SPACE_KEY", font)
+      Window.draw_font(20, 420, "TITLE PRESS T_KEY",font)
       
       # スペースキーが押されたらゲームの状態をリセットし、シーンを変える
       if Input.key_push?(K_SPACE)
