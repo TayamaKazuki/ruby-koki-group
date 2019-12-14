@@ -219,7 +219,7 @@ Window.load_resources do
             end
             
             if pt % 50 == 0
-                item = Enemy.new(220, 150, item_img)
+                item = Enemy.new(90, 200, item_img)
                 items = [item]            
                 end
         end
