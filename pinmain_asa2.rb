@@ -7,6 +7,7 @@ require_remote 'bumper.rb'
 require_remote 'r-flipper.rb'
 require_remote 'l-flipper.rb'
 
+
 Image.register(:player, 'images/ball.png') 
 Image.register(:enemy, 'images/bumper.png')
 Image.register(:enemy2, 'images/bumper2.png')
@@ -77,7 +78,7 @@ Window.load_resources do
         enemies[1] = Enemy.new(100, 220, enemy_img)
         enemies[2] = Enemy.new(300, 220, enemy_img)
         GAME_INFO[:scene] = :playing
-      
+        
       elsif Input.key_push?(K_2)
         enemies[0] = Enemy.new(200, 300, enemy2_img)
         enemies[1] = Enemy.new(100, 80, enemy2_img)
