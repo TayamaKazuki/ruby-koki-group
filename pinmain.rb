@@ -16,6 +16,7 @@ Image.register(:tit, 'images/title.png')
 Image.register(:back, 'images/background.png')
 Image.register(:back2, 'images/back2.jpg')
 Image.register(:gameover, 'images/gameover.jpg')
+Image.register(:wrap, 'images/wrap.png')
 
 Window.load_resources do
   Window.width  = 400
@@ -35,12 +36,14 @@ Window.load_resources do
   enemy_img = Image[:enemy]
   enemy2_img = Image[:enemy2]
   item_img =Image[:item]
+  wrap_img =Image[:wrap]
   enemy_img.set_color_key([0, 0, 0])
 
   #配列---------------------------------------
   players = []
   enemies = []
   items = []
+  warp = []
   flippers_r = []
   flippers_l = []
   #---------------------------------------------
@@ -89,6 +92,7 @@ Window.load_resources do
         enemies[1] = Enemy.new(100, 80, enemy2_img)
         enemies[2] = Enemy.new(300, 80, enemy2_img)
         enemies[3] = Enemy.new(200, 200, enemy_img)
+        warp[0] = Enemy.new(200, 30, wrap_img)
         GAME_INFO[:scene] = :playing2
       end
       
@@ -177,8 +181,10 @@ Window.load_resources do
         Window.draw_font(10,10,"得点:#{pt}",font,color: [255,50,255,0])
         Window.draw_font(10,40,"ボール:#{uni}",font,color: [255,50,255,0])
         Sprite.update(enemies)
+        Sprite.update(warp)
         Sprite.draw(enemies)
         Sprite.draw(items)
+        Sprite.draw(warp)
        # if Input.key_down?(K_SPACE) #デバッグ用　コマ送り
             Sprite.update(players)
         #end
@@ -214,6 +220,13 @@ Window.load_resources do
         if players[1] === items
             players[1].change_x(4)
             items[0].vanish
+        end
+        
+        if players[0] === warp
+            players[0].change_x(6)
+        end
+        if players[1] === warp
+            players[1].change_x(6)
         end
         
         if players[0] === enemies
